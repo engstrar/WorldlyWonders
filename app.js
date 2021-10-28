@@ -1,5 +1,5 @@
 // Setting the port number that will be used on the FLIP1 engr server
-const port = 6969;
+const port = 3012;
 
 // Setting up express
 const express = require("express");
@@ -22,6 +22,23 @@ app.use(express.static("public"));
 app.get("/", (req, res) => {
 	const meta = { title: "Home" };
 	res.render("home", meta);
+});
+
+// Detailed information pages for each wonder
+app.get("/all", (req, res) => {
+	const meta = {
+		title: `${req.query.type.replace(/_/g, " ")}`,
+	};
+	res.render("all", meta);
+});
+
+// Detailed information pages for each wonder
+app.get("/details", (req, res) => {
+	const meta = {
+		title: `${req.query.wonder.replace(/_/g, " ")}`,
+		wonder: `${req.query.wonder}`,
+	};
+	res.render("details", meta);
 });
 
 // Error Handling

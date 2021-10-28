@@ -1,20 +1,37 @@
 #mainNavbar {
 	/* change things about the whole navbar */
-	color: white;
+	color: black;
 }
 
 #mainNavbar .navbar-brand {
 	/* change branding */
 	font-size: 3em;
-	color: white;
+	color: black;
 }
 
 #mainNavbar .nav-link {
 	/* change things about navbar links */
-	color: white;
+	color: black;
 }
 
 #mainNavbar .nav-link:hover {
 	/* change things about navbar links when hovering over */
 	color: grey;
+}
+
+/*Creating a responsive iFrame container for my map*/
+/*Source: https://www.benmarshall.me/responsive-iframes/*/
+.iframe-container {
+	overflow: hidden;
+	padding-top: 56.25%; /* 16:9*/
+	position: relative;
+}
+
+.iframe-container iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: -50px;
+	width: 100%;
 }
