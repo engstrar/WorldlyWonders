@@ -15,6 +15,9 @@ app.set("views", path.join(__dirname, "views"));
 // For parsing post requests
 app.use(express.urlencoded({ extended: true }));
 
+// Setting up Axios for help with requests
+const axios = require("axios");
+
 // Serving static files
 app.use(express.static("public"));
 
@@ -34,11 +37,24 @@ app.get("/all", (req, res) => {
 
 // Detailed information pages for each wonder
 app.get("/details", (req, res) => {
-	const meta = {
-		title: `${req.query.wonder.replace(/_/g, " ")}`,
-		wonder: `${req.query.wonder}`,
-	};
-	res.render("details", meta);
+	let url = `http://192.168.1.89:81/requestImage?name={${req.query.wonder.replace(
+		/_/g,
+		" "
+	)}}`;
+
+	console.log(`Request made to: ${url}`);
+
+	axios(url)
+		.then((response) => {
+			let data = response.data;
+			const meta = {
+				title: `${req.query.wonder.replace(/_/g, " ")}`,
+				wonder: `${req.query.wonder}`,
+				img: `${data.url}`,
+			};
+			res.render("details", meta);
+		})
+		.catch(console.error);
 });
 
 // Error Handling
