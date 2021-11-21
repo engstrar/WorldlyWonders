@@ -8,7 +8,7 @@
         <div class="col-6">
             <div id="wonderCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <img src="#">
+                    <img class="img-fluid" src="#">
                 </div>
                 <a class="carousel-control-prev" href="#wonderCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -35,57 +35,31 @@
                 <h5 class="card-title">Learn More!</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Expand each section below to learn more</h6>
                 <div class="row">
-                    <p>
-                        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#descriptionButton" role="button"
-                            aria-expanded="false" aria-controls="descriptionButton">
-                            Description
-                        </a>
-                        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#historyButton" role="button"
-                            aria-expanded="false" aria-controls="historyButton">
-                            History
-                        </a>
-                        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#upcomingButton" role="button"
-                            aria-expanded="false" aria-controls="upcomingButton">
-                            More sections coming soon...
-                        </a>
-                        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#referencesButton" role="button"
-                            aria-expanded="false" aria-controls="referencesButton">
-                            References
-                        </a>
-                    </p>
-                    <div class="collapse py-1" id="descriptionButton">
-                        <div class="card card-body">
-                            This is where the "Description" paragraph from Wikipedia will go if the users are interested
-                            in
-                            learning more.
-                        </div>
-                    </div>
-                    <div class="collapse py-1" id="historyButton">
-                        <div class="card card-body">
-                            This is where the "History" paragraph from Wikipedia will go if the users are interested in
-                            learning more.
-                        </div>
-                    </div>
-                    <div class="collapse py-1" id="upcomingButton">
-                        <div class="card card-body">
-                            There will be buttons for each section scraped from Wikipedia. Allowing the user to learn
-                            see as much or as little information as they would like.
-                        </div>
-                    </div>
-                    <div class="collapse py-1" id="referencesButton">
-                        <div class="card card-body">
-                            <ol class="list-group list-group-numbered counter-reset">
-                                <li class="list-group-item">1. Reference #1 <a href="#">Link</a></li>
-                                <li class="list-group-item">2. Reference #2 <a href="#">Link</a></li>
-                                <li class="list-group-item">3. Reference #3 <a href="#">Link</a></li>
-                            </ol>
-                        </div>
-                    </div>
+                    <%- include("./partials/sections") %>
+                        <p>
+                            <a class="btn btn-secondary" data-bs-toggle="collapse" href="#referencesButton"
+                                role="button" aria-expanded="false" aria-controls="referencesButton">
+                                References
+                            </a>
 
+                        <div class="collapse py-1" id="referencesButton">
+                            <div class="card card-body">
+                                <ol class="list-group list-group-numbered">
+                                    <% for (const [key, value] of Object.entries(data.references)) { %>
+                                        <li class="list-group-item">
+                                            [<%=key%>] <%-value%>
+                                        </li>
+                                        <% } %>
+                                </ol>
+                                <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
+                                    href="#referencesButton" role="button" aria-expanded="false"
+                                    aria-controls="referencesButton">
+                                    Hide References Section
+                                </a>
+                            </div>
+                        </div>
+                        </p>
                 </div>
-
-
             </div>
         </div>
-
     </div>

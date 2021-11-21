@@ -1,0 +1,48 @@
+<% let buttonCounter=0; %>
+    <% for (const [section, subSections] of Object.entries(data)) { %>
+        <% let button=`button${buttonCounter}`%>
+            <% buttonCounter ++ %>
+                <% let noButton=["title", "Description" , "intro" , "references" ]; %>
+                    <% if (!noButton.includes(section)) {%>
+                        <p>
+                            <a class="btn btn-secondary" data-bs-toggle="collapse" href="#<%=button%>" role=" button"
+                                aria-expanded="false" aria-controls="descriptionButton">
+                                <%- section %>
+                            </a>
+                        </p>
+                        <div class="collapse py-1" id="<%=button%>">
+                            <div class="card card-body">
+                                <h4 class="card-title">
+                                    <%- section %>
+                                </h4>
+                                <% for (const [subSection, subSectionInfo] of Object.entries(data[section])) { %>
+                                    <% if (subSection=="intro" ) {%>
+                                        <%- subSectionInfo %>
+                                            <% } else { %>
+                                                <p>
+                                                <h5 class="card-title">
+                                                    <%- subSection %>
+                                                </h5>
+                                                </p>
+                                                <% for (const [subSubSection, info] of
+                                                    Object.entries(data[section][subSection])) { %>
+                                                    <% if (subSubSection=="intro" ) {%>
+                                                        <%- info %>
+                                                            <% } else { %>
+                                                                <p>
+                                                                <h6 class="card-title">
+                                                                    <%- subSubSection %>
+                                                                </h6>
+                                                                <%- info %>
+                                                                    </p>
+                                                                    <% }}}} %>
+                                                                        <a class="btn btn-outline-secondary btn-sm"
+                                                                            data-bs-toggle="collapse"
+                                                                            href="#<%=button%>" role=" button"
+                                                                            aria-expanded="false"
+                                                                            aria-controls="descriptionButton">
+                                                                            Hide <%- section %> Section
+                                                                        </a>
+                            </div>
+                        </div>
+                        <% }} %>
