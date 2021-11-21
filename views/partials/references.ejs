@@ -1,0 +1,22 @@
+<p>
+    <a class="btn btn-secondary" data-bs-toggle="collapse" href="#referencesButton" role="button" aria-expanded="false"
+        aria-controls="referencesButton">
+        References
+    </a>
+
+<div class="collapse py-1" id="referencesButton">
+    <div class="card card-body">
+        <ol class="list-group list-group-numbered">
+            <% for (const [key, value] of Object.entries(data.references)) { %>
+                <li class="list-group-item">
+                    [<%=key%>] <%-value%>
+                </li>
+                <% } %>
+        </ol>
+        <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#referencesButton" role="button"
+            aria-expanded="false" aria-controls="referencesButton">
+            Hide References Section
+        </a>
+    </div>
+</div>
+</p>

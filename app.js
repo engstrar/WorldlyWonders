@@ -22,7 +22,8 @@ const axios = require("axios");
 app.use(express.static("public"));
 
 // Base URL for the Wikipedia Scraper Used
-const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
+//const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
+const wikiScraper = "http://localhost:4203/?page=";
 
 // Base URL for Marilyn's Image Service
 const imgService = "http://notforlong.net:5007/requestImage?name=";
@@ -44,18 +45,15 @@ app.get("/all", (req, res) => {
 // Detailed information pages for each wonder
 app.get("/details", (req, res) => {
 	let wikiURL = wikiScraper + req.query.wonder;
+	let wonder = `${req.query.wonder.replace(/_/g, " ")}`;
 	console.log(`Scrape Data From: ${wikiURL}`);
-	console.log(
-		`Request Image from: ${
-			imgService + req.query.wonder.replace(/_/g, " ")
-		}`
-	);
+	console.log(`Request Image from: ${imgService + wonder}`);
 
 	axios(wikiURL)
 		.then((wikiResponse) => {
 			let data = wikiResponse.data;
 			const meta = {
-				title: `${req.query.wonder.replace(/_/g, " ")}`,
+				title: wonder,
 				wonder: `${req.query.wonder}`,
 				map: `https://maps.google.com/maps?q=${req.query.long}, ${req.query.lat}&z=15&output=embed`,
 				img: " ",
@@ -75,5 +73,5 @@ app.use((req, res) => {
 
 // Communication on the server
 app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+	console.log(`LIVE @ http://localhost:${port}/`);
 });
