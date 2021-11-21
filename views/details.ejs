@@ -8,8 +8,7 @@
         <div class="col-6">
             <div id="wonderCarousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <img src=<%=img%>
-                    alt="Brooklyn Bridge" class="img-fluid">
+                    <img src="#">
                 </div>
                 <a class="carousel-control-prev" href="#wonderCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -22,9 +21,7 @@
             </div>
         </div>
         <div class="col-6">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12098.167636954853!2d-73.9968643!3d40.7060855!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2526ddba7abd465c!2sBrooklyn%20Bridge!5e0!3m2!1sen!2sus!4v1635383028143!5m2!1sen!2sus"
-                style="width: 100%;height: 100%;"></iframe>
+            <iframe src="<%=map%>" style="width: 100%;height: 100%;"></iframe>
         </div>
     </div>
 
@@ -32,8 +29,9 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">About</h5>
-                <p class="card-text">This is where the Wikipedia introduction paragraph will go giving the user a brief
-                    overview of the wonder.</p>
+                <p class="card-text">
+                    <%=data.intro%>
+                </p>
                 <h5 class="card-title">Learn More!</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Expand each section below to learn more</h6>
                 <div class="row">

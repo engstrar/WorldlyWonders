@@ -21,13 +21,16 @@ const axios = require("axios");
 // Serving static files
 app.use(express.static("public"));
 
+// Base URL for the Wikipedia Scraper Used
+const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
+
 // Home
 app.get("/", (req, res) => {
 	const meta = { title: "Home" };
 	res.render("home", meta);
 });
 
-// Detailed information pages for each wonder
+// View all page for each category of wonder
 app.get("/all", (req, res) => {
 	const meta = {
 		title: `${req.query.type.replace(/_/g, " ")}`,
@@ -37,24 +40,42 @@ app.get("/all", (req, res) => {
 
 // Detailed information pages for each wonder
 app.get("/details", (req, res) => {
-	let url = `http://192.168.1.89:81/requestImage?name={${req.query.wonder.replace(
-		/_/g,
-		" "
-	)}}`;
+	let wikiURL = wikiScraper + req.query.wonder;
+	console.log(`Scrape: ${wikiURL}`);
 
-	console.log(`Request made to: ${url}`);
-
-	axios(url)
+	axios(wikiURL)
 		.then((response) => {
 			let data = response.data;
 			const meta = {
 				title: `${req.query.wonder.replace(/_/g, " ")}`,
 				wonder: `${req.query.wonder}`,
-				img: `${data.url}`,
+				map: `https://maps.google.com/maps?q=${req.query.long}, ${req.query.lat}&z=15&output=embed`,
+				img: ` `,
+				data: data,
 			};
 			res.render("details", meta);
 		})
 		.catch(console.error);
+
+	// COMMENTED OUT MARYLIN'S IMAGE SERVICE FOR NOW
+	// let url = `http://192.168.1.89:81/requestImage?name={${req.query.wonder.replace(
+	// 	/_/g,
+	// 	" "
+	// )}}`;
+
+	// console.log(`Request made to: ${url}`);
+
+	// axios(url)
+	// 	.then((response) => {
+	// 		let data = response.data;
+	// 		const meta = {
+	// 			title: `${req.query.wonder.replace(/_/g, " ")}`,
+	// 			wonder: `${req.query.wonder}`,
+	// 			img: ` `,
+	// 		};
+	// 		res.render("details", meta);
+	// 	})
+	// 	.catch(console.error);
 });
 
 // Error Handling
