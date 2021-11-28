@@ -1,4 +1,4 @@
-// Setting the port number that will be used on the FLIP1 engr server
+// Setting the port number that will be used
 const port = 3012;
 
 // Setting up express
@@ -22,8 +22,9 @@ const axios = require("axios");
 app.use(express.static("public"));
 
 // Base URL for the Wikipedia Scraper Used
-//const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
-const wikiScraper = "http://localhost:4203/?page=";
+const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
+// URL for development, will be removed before final product
+//const wikiScraper = "http://localhost:4203/?page=";
 
 // Base URL for Marilyn's Image Service
 const imgService = "http://notforlong.net:5007/requestImage?name=";
@@ -49,6 +50,8 @@ app.get("/details", (req, res) => {
 	console.log(`Scrape Data From: ${wikiURL}`);
 	console.log(`Request Image from: ${imgService + wonder}`);
 
+	// Need to readd code for Image scraper now that Wiki scraper
+	// is fully integrated.
 	axios(wikiURL)
 		.then((wikiResponse) => {
 			let data = wikiResponse.data;

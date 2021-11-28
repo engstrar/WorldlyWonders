@@ -1,18 +1,19 @@
 <div id="wonderImageCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <% let imageCounter=0;%>
-            <% for (const [img, url] of Object.entries(data.imgs)) { %>
-                <% if (imageCounter==0) { %>
-                    <div class="carousel-item active">
-                        <img src="<%=url%>" class="d-block w-100" alt="...">
-                    </div>
-                    <% imageCounter ++; %>
-                        <% } else { %>
-                            <div class="carousel-item">
-                                <img src="<%=url%>" class="d-block w-100">
-                            </div>
-                            <% imageCounter ++; %>
-                                <% }} %>
+            <% if (Object.entries(data.imgs) !=null) { %>
+                <% for (const [img, url] of Object.entries(data.imgs)) { %>
+                    <% if (imageCounter==0) { %>
+                        <div class="carousel-item active">
+                            <img src="<%=url%>" class="d-block w-100" alt="...">
+                        </div>
+                        <% imageCounter ++; %>
+                            <% } else { %>
+                                <div class="carousel-item">
+                                    <img src="<%=url%>" class="d-block w-100">
+                                </div>
+                                <% imageCounter ++; %>
+                                    <% }}} %>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#wonderImageCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
