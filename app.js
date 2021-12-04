@@ -23,8 +23,6 @@ app.use(express.static("public"));
 
 // Base URL for the Wikipedia Scraper Used
 const wikiScraper = "http://areks-wikipedia-scraper.herokuapp.com/?page=";
-// URL for development, will be removed before final product
-//const wikiScraper = "http://localhost:4203/?page=";
 
 // Base URL for Marilyn's Image Service
 const imgService = "http://notforlong.net:5007/requestImage?name=";
@@ -47,23 +45,34 @@ app.get("/all", (req, res) => {
 app.get("/details", (req, res) => {
 	let wikiURL = wikiScraper + req.query.wonder;
 	let wonder = `${req.query.wonder.replace(/_/g, " ")}`;
+	let imgURL = imgService + wonder;
 	console.log(`Scrape Data From: ${wikiURL}`);
 	console.log(`Request Image from: ${imgService + wonder}`);
 
-	// Need to readd code for Image scraper now that Wiki scraper
-	// is fully integrated.
-	axios(wikiURL)
-		.then((wikiResponse) => {
-			let data = wikiResponse.data;
-			const meta = {
-				title: wonder,
-				wonder: `${req.query.wonder}`,
-				map: `https://maps.google.com/maps?q=${req.query.long}, ${req.query.lat}&z=15&output=embed`,
-				img: " ",
-				data: data,
-			};
-			res.render("details", meta);
-		})
+	// Set up request for Wikipedia Scraper and Image Service
+	const wikiRequest = axios.get(wikiURL);
+	const imgRequest = axios.get(imgURL);
+
+	axios
+		.all([wikiRequest, imgRequest])
+		.then(
+			axios.spread((...responses) => {
+				// Saving the data received from Wikipedia for easy access
+				const wikiResponse = responses[0];
+				const imgResponse = responses[1].data;
+
+				let data = wikiResponse.data;
+				const meta = {
+					title: wonder,
+					wonder: `${req.query.wonder}`,
+					map: `https://maps.google.com/maps?q=${req.query.long}, ${req.query.lat}&z=15&output=embed`,
+					img: imgResponse,
+					data: data,
+				};
+				res.render("details", meta);
+			})
+		)
+		// Error Handling
 		.catch(console.error);
 });
 
